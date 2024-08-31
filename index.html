@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex justify-center items-center h-screen">
+    <section class="bg-gray-800 p-5 rounded-md">
+        <input type="text" id="monitor" class=" w-full py-2 text-right px-2 rounded-sm font-bold text-lg border-2 border-gray-700">
+        <div class="buttons grid grid-cols-4 gap-1 mt-2 font-semibold text-white">
+            <button class="col-span-2 bg-orange-500 rounded-xl py-2.5 text-2xl" data-attribute="AC">AC</button>
+            <button class="bg-orange-500 rounded-full py-3.5 text-2xl" data-attribute="B">B</button>
+            <button class="bg-orange-500 rounded-full py-3.5 text-2xl operators" data-attribute="%">%</button>
+            <button class="bg-orange-500 rounded-full py-3.5 text-2xl numbers" data-attribute="7">7</button>
+            <button class="bg-orange-500 rounded-full py-3.5 text-2xl numbers" data-attribute="8">8</button>
+            <button class="bg-orange-500 rounded-full py-3.5 text-2xl numbers" data-attribute="9">9</button>
+            <button class="bg-orange-500 rounded-full py-3.5 text-2xl operators" data-attribute="/">/</button>
+            <button class="bg-orange-500 rounded-full py-3.5 text-2xl numbers" data-attribute="4">4</button>
+            <button class="bg-orange-500 rounded-full py-3.5 text-2xl numbers" data-attribute="5">5</button>
+            <button class="bg-orange-500 rounded-full py-3.5 text-2xl numbers" data-attribute="6">6</button>
+            <button class="bg-orange-500 rounded-full py-3.5 text-2xl operators" data-attribute="*">*</button>
+            <button class="bg-orange-500 rounded-full py-3.5 text-2xl numbers" data-attribute="1">1</button>
+            <button class="bg-orange-500 rounded-full py-3.5 text-2xl numbers" data-attribute="2">2</button>
+            <button class="bg-orange-500 rounded-full py-3.5 text-2xl numbers" data-attribute="3">3</button>
+            <button class="bg-orange-500 rounded-full py-3.5 text-2xl operators" data-attribute="-">-</button>
+            <button class="bg-orange-500 rounded-full py-3.5 text-2xl numbers" data-attribute="0">0</button>
+            <button class="bg-orange-500 rounded-full py-3.5 text-2xl numbers" data-attribute=".">.</button>
+            <button id="equals" class="bg-orange-500 rounded-full py-3.5 text-2xl equals" data-attribute="=">=</button>
+            <button class="bg-orange-500 rounded-full py-3.5 text-2xl operators" data-attribute="+">+</button>
+        </div>
+    </section>
+    <script>
+        var num1;
+        var num2;
+        var result;
+        var newNumber = false;
+        var monitor  = document.getElementById('monitor');
+        var operation;
+        var mathoperators = [];
+
+        var numbers = document.querySelectorAll('.numbers');
+        numbers.forEach(function(number){
+            number.addEventListener('click',function(){
+                var digit = number.getAttribute('data-attribute'); // Add quotes around 'data-attribute'
+                if(newNumber){
+                    monitor.value = digit;
+                    newNumber = false;
+                }else{
+                    monitor.value+= digit;
+                }
+            })
+        })
+
+        var operators = document.querySelectorAll('.operators');
+        operators.forEach(function(operator){
+            operator.addEventListener('click', function(){
+                mathoperators.push(operation = operator.getAttribute('data-attribute'));
+                if(mathoperators.length > 1){             
+                        num2 = parseFloat(monitor.value);
+                        switch(operation){
+                            case '+':
+                            result =  num1 + num2
+                                break;
+                            case '-':
+                            result = num1 - num2
+                                break;
+                            case '*':
+                            result =  num1 * num2
+                                break;
+                            case '/':
+                            result =  num1 / num2
+                                break;
+                        }
+                       num1 = result;
+                       num2 = 0;
+                       monitor.value  = operation;
+                       newNumber = true;
+                }else{
+                    operation = operator.getAttribute('data-attribute');
+                    num1 = parseFloat(monitor.value);
+                    monitor.value = operation;
+                    newNumber = true;
+                }
+         
+            })
+        })
+
+        var equals = document.getElementById('equals');
+         equals.addEventListener('click', function(){
+            num2 = parseFloat(monitor.value);
+            switch(operation){
+                case '+':
+                  result =  num1 + num2
+                    break;
+                case '-':
+                   result = num1 - num2
+                    break;
+                case '*':
+                  result =  num1 * num2
+                    break;
+                case '/':
+                  result =  num1 / num2
+                    break;
+            }
+            monitor.value = result;
+            mathoperators =  [];
+        })
+
+    </script>
+</body>
+</html>
