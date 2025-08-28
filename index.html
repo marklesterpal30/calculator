@@ -108,6 +108,20 @@
             mathoperators =  [];
         })
 
+        // Clear all input and reset state (AC)
+        var acButton = document.querySelector('button[data-attribute="AC"]');
+        if (acButton) {
+            acButton.addEventListener('click', function(){
+                monitor.value = '';
+                num1 = undefined;
+                num2 = undefined;
+                result = undefined;
+                operation = undefined;
+                mathoperators = [];
+                newNumber = false;
+            })
+        }
+
     </script>
 </body>
 </html>
